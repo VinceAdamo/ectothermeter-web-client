@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import { AuthProvider } from './contexts/AuthContext';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { LoginForm } from './components/LoginForm';
