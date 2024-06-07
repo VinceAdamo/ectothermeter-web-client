@@ -5,7 +5,7 @@ import { DEVICE_PAGE_PATH } from '../constants';
 
 interface AuthContextType {
   authToken: string | null;
-  login: (username: string, password: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -23,13 +23,15 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const response = await UserService.login(email, password);
 
     if (!response) {
-      return;
+      return false;
     }
 
     const { token } = response;
 
     setAuthToken(token);
     navigate(DEVICE_PAGE_PATH);
+
+    return true;
   };
 
   const logout = () => {

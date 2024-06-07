@@ -8,6 +8,7 @@ import { LoginInput } from './LoginInput';
 export const LoginForm: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(false);
   const authContext = useContext(AuthContext);
 
   if (!authContext) {
@@ -22,16 +23,32 @@ export const LoginForm: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    await login(username, password);
+    const result = await login(username, password);
+    if (!result) {
+      setError(true);
+      setUsername('');
+      setPassword('');
+    }
   };
+
+  const handleUsernameChange = (value: string) => {
+    setUsername(value);
+    setError(false);
+  }
+
+  const handlePasswordChange = (value: string) => {
+    setPassword(value);
+    setError(false);
+  }
 
   return (
     <div className="flex flex-row justify-center items-center h-screen font-mono bg-gradient-to-r from-cyan-500 to-pink-500">
         <div className='bg-white rounded-lg p-14 w-full md:w-3/4 lg:w-2/3 xl:w-1/2 2xl:w-1/3 mx-2'>
             <div className='text-3xl flex justify-center mb-10 font-bold'>Login</div>
             <form onSubmit={handleSubmit}>
-            <LoginInput value={username} handleChange={setUsername} label='Username' type='text'/>
-            <LoginInput value={password} handleChange={setPassword} label='Password' type='password'/>
+            <LoginInput value={username} handleChange={handleUsernameChange} label='Username' type='text' error={error}/>
+            <LoginInput value={password} handleChange={handlePasswordChange} label='Password' type='password' error={error}/>
+            {error && <div className='text-lg flex justify-center my-5 font-bold text-red-500'>Invalid username or password!</div>}
             <div className='flex flex-row justify-center'>
                 <button 
                     type="submit" 
