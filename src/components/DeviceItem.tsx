@@ -33,20 +33,20 @@ export const DeviceItem: React.FC<DeviceItemProps> = (
             <div className='font-bold text-3xl'>{name}</div>
             <div className='pt-2 pb-5 text-gray-400 text-xs'>{serialNumber}</div>
             <div className='flex flex-col gap-4'>
-            <ReadingLabel 
-                label='Temperature'
-                value={temperature?.value}
-                timestamp={temperature?.timestamp}
-                units='°F'
-                icon={<FaTemperatureHalf />}
-            />
-            <ReadingLabel
-                label='Humidity'
-                value={humidity?.value}
-                timestamp={humidity?.timestamp}
-                units='%'
-                icon={<MdWaterDrop />}
-            />
+                <ReadingLabel 
+                    label='Temperature'
+                    value={temperature?.value}
+                    timestamp={temperature?.timestamp}
+                    units='°F'
+                    icon={<FaTemperatureHalf />}
+                />
+                <ReadingLabel
+                    label='Humidity'
+                    value={humidity?.value}
+                    timestamp={humidity?.timestamp}
+                    units='%'
+                    icon={<MdWaterDrop />}
+                />
             </div>
         </div>
     );

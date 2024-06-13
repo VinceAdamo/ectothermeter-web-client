@@ -26,7 +26,7 @@ export const ReadingLabel: React.FC<ReadingLabelProps> = (
         <div className='bg-slate-600 rounded-md p-2 flex justify-between items-center'>
             <div className='flex justify-center items-center text-5xl md:text-7xl'>{icon}</div>
             <div className='flex flex-col justify-between'>
-                <div className='flex justify-center items-center text-5xl md:text-7xl'>{value ? `${Math.round(value * 10) / 10}${units}` : 'N/A'}</div>
+                <div className='flex justify-end items-center text-5xl md:text-7xl'>{value ? `${Math.round(value * 10) / 10}${units}` : 'N/A'}</div>
                 <div className='text-gray-400 text-xs flex justify-end'>{date ? date : 'N/A'}</div>
             </div>
         </div>
