@@ -1,5 +1,5 @@
 {
-  "name": "yoshi-sensor-client",
+  "name": "ectothermeter-web-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
