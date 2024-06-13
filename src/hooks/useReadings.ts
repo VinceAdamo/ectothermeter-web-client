@@ -6,6 +6,8 @@ import { TemperatureService, HumidityService } from '../services';
 export const useReadings = (deviceId: string) => {
     const [temperature, setTemperatureReadings] = useState<Readings | null>(null);
     const [humidity, setHumidityReadings] = useState<Readings | null>(null);
+    const [temperatureLoading, setTemperatureLoading] = useState<boolean>(true);
+    const [humidityLoading, setHumidityLoading] = useState<boolean>(true);
 
     const authContext = useContext(AuthContext);
 
@@ -24,20 +26,24 @@ export const useReadings = (deviceId: string) => {
             const response = await TemperatureService.latest(deviceId, authToken);
 
             if (!response) {
+                setTemperatureLoading(false);
                 return;
             }
 
             setTemperatureReadings(response);
+            setTemperatureLoading(false);
         };
 
         const fetchHumidity = async () => {
             const response = await HumidityService.latest(deviceId, authToken);
 
             if (!response) {
+                setHumidityLoading(false);
                 return;
             }
 
             setHumidityReadings(response);
+            setHumidityLoading(false);
         };
 
         fetchTemperature();
@@ -52,5 +58,9 @@ export const useReadings = (deviceId: string) => {
         };
     }, [authContext, deviceId]);
 
-    return { temperature, humidity };
+    return { 
+        temperature,
+        humidity,
+        loading: temperatureLoading || humidityLoading,
+    };
 };

@@ -16,7 +16,7 @@ export const DeviceItem: React.FC<DeviceItemProps> = (
     const { name, serialNumber, id } = device;
 
     const authContext = useContext(AuthContext);
-    const { temperature, humidity } = useReadings(id);
+    const { temperature, humidity, loading } = useReadings(id);
 
     if (!authContext) {
         throw new Error('AuthContext must be used within an AuthProvider');
@@ -39,6 +39,7 @@ export const DeviceItem: React.FC<DeviceItemProps> = (
                     timestamp={temperature?.timestamp}
                     units='°F'
                     icon={<FaTemperatureHalf />}
+                    loading={loading}
                 />
                 <ReadingLabel
                     label='Humidity'
@@ -46,6 +47,7 @@ export const DeviceItem: React.FC<DeviceItemProps> = (
                     timestamp={humidity?.timestamp}
                     units='%'
                     icon={<MdWaterDrop />}
+                    loading={loading}
                 />
             </div>
         </div>
