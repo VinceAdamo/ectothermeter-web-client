@@ -5,6 +5,8 @@ import { DeviceService } from '../services';
 
 export const useDevices = () => {
     const [devices, setDevices] = useState<Device[] | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
 
     const authContext = useContext(AuthContext);
 
@@ -20,17 +22,24 @@ export const useDevices = () => {
         }
 
         const fetchDevices = async () => {
-            const response = await DeviceService.readForUser(authToken);
+            try {
+                const response = await DeviceService.readForUser(authToken);
 
-            if (!response) {
-                return;
+                if (!response) {
+                    throw new Error('Empty response received reading user devices!');;
+                }
+
+                setDevices(response);
+                setLoading(false);
+            } catch (error) {
+                console.error(error);
+                setError('An error occurred while fetching devices!');
+                setLoading(false);
             }
-
-            setDevices(response);
         };
 
         fetchDevices();
     }, [authContext]);
 
-    return devices;
+    return { devices, loading, error };
 };

@@ -1,20 +1,28 @@
 import ClipLoader from "react-spinners/ClipLoader";
-import { Device } from "../types";
 import { DeviceItem } from "./DeviceItem";
+import { useDevices } from "../hooks/useDevices";
 
-interface DeviceGridProps {
-    devices: Device[] | null;
-}
+export const DeviceGrid: React.FC = () => {
+    const { devices, loading, error } = useDevices();
 
-export const DeviceGrid: React.FC<DeviceGridProps> = ({
-    devices,
-}) => {
-    if (!devices) {
+    if (loading) {
         return (
             <div className='flex justify-center items-center h-screen'>
-                <ClipLoader color='#ffffff' loading={true} size={150} />
+                <ClipLoader color='#ffffff' loading={loading} size={150} />
             </div>
         );
+    }
+
+    if (error) {
+        return (
+            <div className='flex justify-center items-center h-screen text-red-400 text-2xl xl:text-4xl text-center font-bold'>
+                {error}
+            </div>
+        );
+    }
+
+    if (!devices) {
+        throw new Error('Devices should be defined when not loading or in error state!');
     }
 
     if (devices.length === 0) {
